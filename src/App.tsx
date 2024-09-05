@@ -22,7 +22,7 @@ function App() {
   const [previousReviewIndex, setPreviousReviewIndex] = useState<number | null>(
     null
   );
-  const [reviewKey, setReviewKey] = useState<number>(0);
+  // const [reviewKey, setReviewKey] = useState<number>(0);
 
   useEffect(() => {
     if (isFocused) {
@@ -40,7 +40,7 @@ function App() {
       setCurrentReviewIndex((prevIndex) =>
         prevIndex === reviewData.length - 1 ? 0 : prevIndex + 1
       );
-      setReviewKey((prevKey) => prevKey + 1);
+      // setReviewKey((prevKey) => prevKey + 1);
     }, 3000);
 
     return () => clearInterval(intervalId);
