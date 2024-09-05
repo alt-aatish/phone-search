@@ -94,7 +94,7 @@ function App() {
           )}
         >
           <div
-            className="w-full h-[85vh] sm:h-[820px] lg:h-[850px] flex flex-col items-center justify-start p-1 sm:p-10 rounded-md"
+            className="w-full h-[95vh] sm:h-[820px] lg:h-[850px] flex flex-col items-center justify-start p-1 rounded-md"
             onClick={(e: any) => {
               if (e.target !== e.currentTarget) return;
               setIsFocused(false);
@@ -112,37 +112,37 @@ function App() {
                   isFocused
                     ? "animate-fadeOutThenShrink"
                     : "animate-growThenFadeIn",
-                  "flex flex-row justify-center items-center gap-4 w-4/5"
+                  "flex flex-row justify-center items-center gap-1 xl:gap-4 w-full 2xl:w-4/5"
                 )}
               >
                 <div className="flex flex-col gap-8 justify-center items-start p-6">
-                  <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#312e81]">
+                  <div className="text-3xl sm:text-4xl xl:text-5xl font-bold text-[#312e81]">
                     Try Our Free Phone Number Lookup
                   </div>
-                  <div className="text-base md:text-lg font-medium text-[#8a8cd0]">
+                  <div className="text-base xl:text-lg font-medium text-[#8a8cd0] line-clamp-2">
                     Use our free phone number lookup to find out who's calling
                     you. Our comprehensive database includes millions of phone
                     numbers.
                   </div>
                   <div className="w-full flex flex-row gap-4 items-center">
-                    <div className="px-20 py-4 rounded-2xl text-white text-center bg-[#6366f1] cursor-pointer hover:bg-[#7a7be4]">
+                    <div className="text-xs sm:text-base px-10 py-3 sm:px-10 sm:py-3 xl:px-16 xl:py-3 rounded-md sm:rounded-xl text-white text-center bg-[#6366f1] cursor-pointer hover:bg-[#7a7be3]">
                       Get Premium
                     </div>
-                    <div className="px-20 py-4 rounded-2xl text-[#6366f1] text-center cursor-pointer border border-[#6366f1] hover:bg-[#7a7be4] hover:text-white">
+                    <div className="text-xs sm:text-base px-10 py-3 sm:px-10 sm:py-3 xl:px-16 xl:py-3 rounded-md sm:rounded-xl text-[#6366f1] text-center cursor-pointer border border-[#6366f1] hover:bg-[#7a7be4] hover:text-white">
                       Book a Demo
                     </div>
                   </div>
 
-                  <div className="w-4/5 h-[280px] flex flex-col overflow-hidden relative">
+                  <div className="w-full xl:w-3/4 h-[280px] flex flex-row overflow-hidden relative gap-5">
                     {previousReviewIndex !== null && (
                       <Reviews
-                        key={`prev-${reviewKey}`}
+                        // key={`prev-${reviewKey}`}
                         reviewData={reviewData[previousReviewIndex]}
-                        classList="absolute w-full animate-slideOutToTop mr-4"
+                        classList="absolute w-full animate-slideOutToTop"
                       />
                     )}
                     <Reviews
-                      key={`current-${reviewKey}`}
+                      // key={`current-${reviewKey}`}
                       reviewData={reviewData[currentReviewIndex]}
                       classList="absolute w-full animate-slideInFromBottom"
                     />
@@ -155,10 +155,10 @@ function App() {
                     isFocused
                       ? "animate-fadeOutThenShrink"
                       : "animate-growThenFadeIn",
-                    "h-full flex items-center justify-center"
+                    "xl:w-auto flex-grow h-full items-center justify-center xl:flex hidden"
                   )}
                 >
-                  <div className="rounded-xl overflow-clip">
+                  <div className="rounded-xl overflow-clip w-2/5 xl:w-full flex flex-row items-center">
                     <VideoPlayer />
                   </div>
                 </div>
@@ -166,13 +166,13 @@ function App() {
 
               <div
                 className={cn(
-                  delayedEffect ? "w-full" : "lg:w-2/3",
-                  "w-full transition-all ease-in-out duration-500 z-50 relative"
+                  delayedEffect ? "w-full lg:w-4/5" : "lg:w-2/5",
+                  "w-11/12 md:w-full transition-all ease-in-out duration-500 z-50 relative"
                 )}
               >
                 <PhoneInput
-                  onFocus={() => {
-                    setIsFocused(true);
+                  onFocus={(s) => {
+                    setIsFocused(s);
                   }}
                   onSearch={(phoneNumber) => handleSearch(phoneNumber)}
                   errorMessage={error}
@@ -184,7 +184,7 @@ function App() {
                   isFocused && delayedEffect
                     ? "flex animate-growThenFadeIn"
                     : "hidden",
-                  "w-full lg:w-3/5"
+                  "w-11/12 sm:w-3/4 md:w-2/3 lg:w-[600px]"
                 )}
               >
                 <ResultBox resultData={responseData} isLoading={isLoading} />

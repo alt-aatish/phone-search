@@ -9,7 +9,7 @@ import {
 import { cn } from "@/utils/cn";
 
 const PhoneInput = (props: {
-  onFocus: () => void;
+  onFocus: (s: boolean) => void;
   onSearch: (phoneNumber: string) => void;
   errorMessage: string | null;
 }) => {
@@ -107,8 +107,11 @@ const PhoneInput = (props: {
             placeholder="Enter Number"
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
-            onFocus={props.onFocus}
+            onFocus={() => props.onFocus(true)}
             onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                props.onFocus(false);
+              }
               if (e.key === "Enter") {
                 props.onSearch(
                   selectedCountry.phoneCode + phoneNumber.replace(/\s/g, "")
