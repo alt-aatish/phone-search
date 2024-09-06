@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Play, SpeakerHigh, SpeakerSimpleX } from "@phosphor-icons/react";
+import { SpeakerHigh, SpeakerSimpleX } from "@phosphor-icons/react";
 import { useState } from "react";
 import ReactPlayer from "react-player/lazy";
 
