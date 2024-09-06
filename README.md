@@ -15,7 +15,7 @@ Clone the repository and install the dependencies:
 
 ```bash
 git clone <repository-url>
-cd <project-directory>
+cd phone-search
 yarn install
 ```
 
@@ -23,6 +23,6 @@ yarn install
 
 ```bash
 git clone <repository-url>
-cd <project-directory>
+cd phone-search
 npm install
 ```
