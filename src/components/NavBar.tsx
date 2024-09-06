@@ -12,21 +12,21 @@ function NavBar() {
       </div>
       <div className="flex-grow"></div>
       <div className="hidden lg:flex gap-8 text-sm">
-        <ul className="flex flex-row items-center gap-8 text-[#77859a] font-medium">
+        <ul className="flex flex-row items-center gap-8 text-[#77859a] font-medium cursor-pointer">
           <li>
             <a href="/">Platform</a>
           </li>
           <li>
-            <a href="/users">Industries</a>
+            <a href="/">Industries</a>
           </li>
           <li>
-            <a href="/posts">Pricing</a>
+            <a href="/">Pricing</a>
           </li>
           <li>
-            <a href="/posts">Guides</a>
+            <a href="/">Guides</a>
           </li>
           <li>
-            <a href="/posts">Pioneer</a>
+            <a href="/">Pioneer</a>
           </li>
         </ul>
         <button className="mt-auto bg-[#6366f1] text-white py-2 px-6 rounded-md flex flex-row items-center justify-center text-center">
@@ -67,21 +67,21 @@ function NavBar() {
             <X className="w-full h-full" />
           </div>
         </div>
-        <ul className="flex flex-col gap-10 text-[#77859a] font-medium mt-4">
+        <ul className="flex flex-col gap-10 text-[#77859a] font-medium mt-4 cursor-pointer">
           <li>
             <a href="/">Platform</a>
           </li>
           <li>
-            <a href="/users">Industries</a>
+            <a href="/">Industries</a>
           </li>
           <li>
-            <a href="/posts">Pricing</a>
+            <a href="/">Pricing</a>
           </li>
           <li>
-            <a href="/posts">Guides</a>
+            <a href="/">Guides</a>
           </li>
           <li>
-            <a href="/posts">Pioneer</a>
+            <a href="/">Pioneer</a>
           </li>
         </ul>
         <div className="flex-grow"></div>
