@@ -10,6 +10,6 @@ export const fetchFakeData = (phoneNumber: string): Promise<responseType> => {
       } else {
         reject(new Error("No data found for the provided phone number."));
       }
-    }, 5000);
+    }, 2000);
   });
 };
