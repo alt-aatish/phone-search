@@ -24,7 +24,7 @@ export default function ResultBox(props: {
   return (
     <>
       {props.resultData || props.isLoading ? (
-        <div className="w-full rounded-2xl h-full flex flex-col gap-2 bg-white px-6 pb-5 sm:pb-0 sm:px-8 animate-fadeInToView border border-gray-300 relative">
+        <div className="w-full rounded-2xl h-full flex flex-col gap-2 bg-white px-6 pb-5 sm:pb-0 sm:px-8 animate-fadeInToView border border-[#6366f155] relative">
           <div className="flex items-start h-full absolute top-4 sm:top-8 right-4 z-20">
             {isLoading ? (
               <></>
@@ -126,7 +126,7 @@ export default function ResultBox(props: {
           </div>
         </div>
       ) : (
-        <div className="w-full rounded-2xl h-full flex flex-col items-center justify-center bg-white p-10 pb-20 sm:p-10 relative border border-gray-300">
+        <div className="w-full rounded-2xl h-full flex flex-col items-center justify-center bg-white p-10 pb-20 sm:p-10 relative border border-[#6366f155] ">
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="w-40 mb-4">
               <Lottie animationData={SearchAnim} loop={true} className="w-full h-full" />

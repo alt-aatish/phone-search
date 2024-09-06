@@ -14,22 +14,22 @@ function NavBar() {
       <div className="hidden lg:flex gap-8 text-sm">
         <ul className="flex flex-row items-center gap-8 text-[#77859a] font-medium cursor-pointer">
           <li>
-            <a href="/">Platform</a>
+            <a href="/" className="hover:text-[#77859aaa]">Platform</a>
           </li>
           <li>
-            <a href="/">Industries</a>
+            <a href="/" className="hover:text-[#77859aaa]">Industries</a>
           </li>
           <li>
-            <a href="/">Pricing</a>
+            <a href="/" className="hover:text-[#77859aaa]">Pricing</a>
           </li>
           <li>
-            <a href="/">Guides</a>
+            <a href="/" className="hover:text-[#77859aaa]">Guides</a>
           </li>
           <li>
-            <a href="/">Pioneer</a>
+            <a href="/" className="hover:text-[#77859aaa]">Pioneer</a>
           </li>
         </ul>
-        <button className="mt-auto bg-[#6366f1] text-white py-2 px-6 rounded-md flex flex-row items-center justify-center text-center">
+        <button className="mt-auto bg-[#6366f1] text-white py-2 px-6 rounded-md flex flex-row items-center justify-center text-center hover:bg-[#7a7be4]">
           Portal
         </button>
       </div>

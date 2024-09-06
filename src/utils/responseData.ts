@@ -23,7 +23,7 @@ export const fakeData: responseType[] = [
     name: "Jane Smith",
     carrier: "AT&T",
     countryCode: "US",
-    phoneNumber: "+1987654321",
+    phoneNumber: "+11234567890",
     location: "California",
     fraud: null,
     nationalFormat: "(987) 654-3210",

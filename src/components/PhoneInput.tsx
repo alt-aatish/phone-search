@@ -39,7 +39,7 @@ const PhoneInput = (props: {
     const temp = event.target.value.split(" ");
 
     if (temp[0].charAt(0) === "+" && temp.length > 1) {
-      const newCountry = countryList.find(
+      const newCountry = countryList.reverse().find(
         (country) => country.phoneCode === temp[0]
       );
 
