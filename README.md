@@ -2,11 +2,6 @@
 
 The Project uses ReactJS and TailwindCSS
 
-### Prerequisites
-
-- Node.js (v14 or later)
-- Yarn (recommended) or npm
-
 ### Installation
 
 Clone the repository and install the dependencies:
