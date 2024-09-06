@@ -1,22 +1,38 @@
 import { cn } from "@/utils/cn";
-import { SpeakerHigh, SpeakerSimpleX } from "@phosphor-icons/react";
+import { Play, SpeakerHigh, SpeakerSimpleX } from "@phosphor-icons/react";
 import { useState } from "react";
 import ReactPlayer from "react-player/lazy";
 
-function VideoPlayer() {
+function VideoPlayer(props: { url: string; thumb: string }) {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [show, setShow] = useState<boolean>(false);
+  const [play, setPlay] = useState<boolean>(false);
   return (
     <div className="relative">
       <ReactPlayer
-        url="<https://www.youtube.com/watch?v=w47oTyA4hhg>"
+        url={`<${props.url}>`}
         playing={true}
         muted={isMuted}
         loop={true}
+        volume={0.4}
+        light={!play ? undefined : props.thumb}
         style={{ width: "100%", height: "100%" }}
       />
-      <div className="absolute w-full h-full top-0 left-0" onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
-        <div className={cn(show ? "flex" : "hidden", "flex-row justify-end items-end h-full p-2 bg-[#00000022]")}>
+      <div
+        className="absolute w-full h-full top-0 left-0"
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+      >
+        <div
+          className={cn(
+            show ? "flex" : "hidden",
+            "flex-row justify-end items-end h-full p-2 bg-[#00000022]"
+          )}
+          onClick={(e: any) => {
+            if (e.target !== e.currentTarget) return;
+            setPlay(!play);
+          }}
+        >
           {isMuted ? (
             <div
               className="flex flex-row items-center text-white gap-2 border-white border p-1 px-2 cursor-pointer opacity-50 hover:opacity-100"
