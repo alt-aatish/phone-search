@@ -1,4 +1,3 @@
-import NavBar from "@/components/NavBar";
 import LookUp from "@/pages/LookUp/LookUp";
 import DefaultLayout from "./components/Layout/DefaultLayout";
 

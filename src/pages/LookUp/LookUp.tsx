@@ -1,5 +1,3 @@
-import React from "react";
-import NavBar from "@/components/NavBar";
 import PhoneInput from "@/components/PhoneInput";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { cn } from "@/utils/cn";

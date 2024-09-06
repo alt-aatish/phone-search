@@ -1,5 +1,4 @@
 import NavBar from "@/components/NavBar";
-import LookUp from "@/pages/LookUp/LookUp";
 import React, { PropsWithChildren } from "react";
 
 function DefaultLayout({ children }: PropsWithChildren) {

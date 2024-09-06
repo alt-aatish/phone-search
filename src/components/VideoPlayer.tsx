@@ -15,7 +15,7 @@ function VideoPlayer(props: { url: string; thumb: string }) {
         muted={isMuted}
         loop={true}
         volume={0.4}
-        light={!play ? undefined : props.thumb}
+        light={play ? undefined : props.thumb}
         style={{ width: "100%", height: "100%" }}
       />
       <div
