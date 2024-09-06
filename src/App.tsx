@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar";
 import PhoneInput from "./components/PhoneInput";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { cn } from "./utils/cn";
 import ResultBox from "./components/ResultBox";
 import { fetchFakeData } from "./utils/responseAPI";
@@ -10,6 +10,38 @@ import { reviewData } from "./utils/reviewData";
 import z from "zod";
 import VideoPlayer from "@/components/VideoPlayer";
 
+type ReviewState = {
+  currentReviewIndex: number;
+  previousReviewIndex: number | null;
+  reviewKey: number;
+};
+
+type ReviewAction = { type: "next" };
+
+const reviewReducer = (
+  state: ReviewState,
+  action: ReviewAction
+): ReviewState => {
+  switch (action.type) {
+    case "next":
+      return {
+        ...state,
+        previousReviewIndex: state.currentReviewIndex,
+        currentReviewIndex: (state.currentReviewIndex + 1) % reviewData.length,
+        reviewKey: state.reviewKey + 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const phoneNumberValidator = z
+  .string({
+    required_error: "Enter a valid phone number",
+    invalid_type_error: "Enter a valid phone number",
+  })
+  .regex(/^\+(\d{4,})(\s\d{4,})*$/, "Enter a valid phone number");
+
 function App() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [delayedEffect, setDelayedEffect] = useState<boolean>(false);
@@ -17,16 +49,17 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // State for reviews
-  const [currentReviewIndex, setCurrentReviewIndex] = useState<number>(0);
-  const [previousReviewIndex, setPreviousReviewIndex] = useState<number | null>(
-    null
-  );
-  // const [reviewKey, setReviewKey] = useState<number>(0);
+  const [{ currentReviewIndex, previousReviewIndex, reviewKey }, dispatch] =
+    useReducer(reviewReducer, {
+      currentReviewIndex: 0,
+      previousReviewIndex: null,
+      reviewKey: 0,
+    });
 
   useEffect(() => {
     if (isFocused) {
       setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setDelayedEffect(true);
       }, 600);
     } else {
@@ -35,50 +68,30 @@ function App() {
   }, [isFocused]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setPreviousReviewIndex(currentReviewIndex);
-      setCurrentReviewIndex((prevIndex) =>
-        prevIndex === reviewData.length - 1 ? 0 : prevIndex + 1
-      );
-      // setReviewKey((prevKey) => prevKey + 1);
-    }, 3000);
-
+    const intervalId = setInterval(() => dispatch({ type: "next" }), 5000);
     return () => clearInterval(intervalId);
-  }, [currentReviewIndex]);
+  }, []);
 
-  const phoneNumberValidator = z
-    .string({
-      required_error: "Enter a valid phone number",
-      invalid_type_error: "Enter a valid phone number",
-    })
-    .regex(/^\+(\d{4,})(\s\d{4,})*$/, "Enter a valid phone number");
+  const handleSearch = useCallback(
+    (phoneNumber: string) => {
+      try {
+        phoneNumberValidator.parse(phoneNumber);
+        setIsLoading(true);
+        setError(null);
+        setResponseData(null);
+        if (!isFocused) setIsFocused(true);
 
-  const handleSearch = (phoneNumber: string) => {
-    try {
-      phoneNumberValidator.parse(phoneNumber);
-      setIsLoading(true);
-      if (!isFocused) {
-        setIsFocused(true);
+        fetchFakeData(phoneNumber)
+          .then((response) => setResponseData(response))
+          .catch((err) => setError(err.message))
+          .finally(() => setIsLoading(false));
+      } catch {
+        setError("Enter a valid phone number");
+        setIsLoading(false);
       }
-      setIsLoading(true);
-      setError(null);
-      setResponseData(null);
-
-      fetchFakeData(phoneNumber)
-        .then((response) => {
-          setResponseData(response);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setError(err.message);
-          setIsLoading(false);
-        });
-    } catch (e) {
-      setError("Enter a valid phone number");
-      setIsLoading(false);
-      return;
-    }
-  };
+    },
+    [isFocused]
+  );
 
   return (
     <div className="flex justify-center items-center">
@@ -94,7 +107,9 @@ function App() {
           )}
         >
           <div
-            className="w-full h-[95vh] sm:h-[820px] lg:h-[850px] flex flex-col items-center justify-start p-1 rounded-md"
+            className={cn(
+              "w-full h-[100vh] sm:h-[820px] lg:h-[850px] flex flex-col items-center justify-start p-1 rounded-md"
+            )}
             onClick={(e: any) => {
               if (e.target !== e.currentTarget) return;
               setIsFocused(false);
@@ -103,7 +118,7 @@ function App() {
             <div
               className={cn(
                 isFocused ? "h-full" : "h-full",
-                "w-full sm:h-full flex flex-col items-center gap-4 lg:gap-8"
+                "w-full sm:h-full flex flex-col items-center"
               )}
             >
               <div
@@ -112,10 +127,11 @@ function App() {
                   isFocused
                     ? "animate-fadeOutThenShrink"
                     : "animate-growThenFadeIn",
-                  "flex flex-row justify-center items-center gap-1 xl:gap-4 w-full 2xl:w-4/5"
+                  "flex flex-row justify-center items-center gap-1 xl:gap-4 w-full 2xl:w-4/5 h-full"
                 )}
               >
-                <div className="flex flex-col gap-8 justify-center items-start p-6">
+                {/* Main Section Left */}
+                <div className="flex flex-col gap-8 justify-center items-start p-6 overflow-hidden relative">
                   <div className="text-3xl sm:text-4xl xl:text-5xl font-bold text-[#312e81]">
                     Try Our Free Phone Number Lookup
                   </div>
@@ -133,22 +149,23 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="w-full xl:w-3/4 h-[280px] flex flex-row overflow-hidden relative gap-5">
+                  <div className="w-full xl:w-3/4 h-[300px] relative flex -z-20">
                     {previousReviewIndex !== null && (
                       <Reviews
-                        // key={`prev-${reviewKey}`}
+                        key={`prev-${reviewKey}`}
                         reviewData={reviewData[previousReviewIndex]}
-                        classList="absolute w-full animate-slideOutToTop"
+                        classList="top-[3%] w-full h-[92%] animate-slideOutToTop mb-10"
                       />
                     )}
                     <Reviews
-                      // key={`current-${reviewKey}`}
+                      key={`current-${reviewKey}`}
                       reviewData={reviewData[currentReviewIndex]}
-                      classList="absolute w-full animate-slideInFromBottom"
+                      classList="absolute top-[3%] w-full h-[92%] animate-slideInFromBottom"
                     />
                   </div>
                 </div>
 
+                {/* Main Section Right */}
                 <div
                   className={cn(
                     "transition-all duration-100 ease-out",
@@ -159,11 +176,15 @@ function App() {
                   )}
                 >
                   <div className="rounded-xl overflow-clip w-2/5 xl:w-full flex flex-row items-center">
-                    <VideoPlayer />
+                    <VideoPlayer
+                      url="https://www.youtube.com/watch?v=w47oTyA4hhg"
+                      thumb="https://echo.win/images/featured/other_resized.webp"
+                    />
                   </div>
                 </div>
               </div>
 
+              {/* Phone Input Section */}
               <div
                 className={cn(
                   delayedEffect ? "w-full lg:w-4/5" : "lg:w-2/5",
@@ -181,13 +202,24 @@ function App() {
 
               <div
                 className={cn(
-                  isFocused && delayedEffect
-                    ? "flex animate-growThenFadeIn"
-                    : "hidden",
-                  "w-11/12 sm:w-3/4 md:w-2/3 lg:w-[600px]"
+                  isFocused && delayedEffect ? "h-auto sm:h-full" : "",
+                  "w-full flex items-center justify-center"
                 )}
+                onClick={(e: any) => {
+                  if (e.target !== e.currentTarget) return;
+                  setIsFocused(false);
+                }}
               >
-                <ResultBox resultData={responseData} isLoading={isLoading} />
+                <div
+                  className={cn(
+                    isFocused && delayedEffect
+                      ? "flex animate-growThenFadeIn"
+                      : "hidden",
+                    "w-11/12 sm:w-3/4 md:w-2/3 lg:w-[600px] h-full"
+                  )}
+                >
+                  <ResultBox resultData={responseData} isLoading={isLoading} />
+                </div>
               </div>
             </div>
           </div>
