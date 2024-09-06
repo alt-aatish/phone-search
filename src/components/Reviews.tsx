@@ -24,7 +24,7 @@ export default function Reviews(props: {
       </div>
       <div className="flex flex-row gap-2 sm:gap-4">
         {Array.from({ length: props.reviewData.rating }).map((_, index) => (
-          <Star weight="fill" className="2-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
+          <Star key={index} weight="fill" className="2-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
         ))}
       </div>
       <div className={cn("flex flex-row items-center gap-2 sm:gap-4")}>
